@@ -10,34 +10,15 @@ const object = {
     fourth: 'Iryna'
 };
 
-function iterateObjectByKey(obj) {
-    obj[Symbol.iterator] = function () {
-        return {
-            index: 0,
-            keys: Object.keys(obj),
-            next() {
-                return {
-                    value: this.keys[this.index],
-                    done: !(this.index++ < this.keys.length)
-                };
-            }
-        };
-    };
-    for (const element of obj) {
-        console.log(element);
-    }
-}
-iterateObjectByKey(object);
-
-function iterateObjectByValue(obj) {
+function iterateObjectByValue(obj) { //or key - keys: Object.keys(obj),
     obj[Symbol.iterator] = function () {
         return {
             index: 0,
             values: Object.values(obj),
             next() {
                 return {
-                    value: this.values[this.index],
-                    done: !(this.index++ < this.values.length)
+                    done: !(this.index < this.values.length),
+                    value: this.values[this.index++],
                 };
             }
         };
@@ -78,8 +59,8 @@ function iterateFromTo(obj) {
             last: this.to,
             next() {
                 return {
-                    value: this.current,
-                    done: !(this.current++ <= this.last)
+                    done: !(this.current <= this.last),
+                    value: this.current++,
                 };
             }
         };
